@@ -11,6 +11,7 @@ interface DropdownProps {
     options: string[];
     isMultiSelect: boolean;
     placeholderText?: string;
+    onSelectionChange?: (selectedOptions: string[]) => void;
 }
 
 // A type alias for non-empty arrays
@@ -33,6 +34,7 @@ const Dropdown: FC<DropdownProps> = ({
     options,
     isMultiSelect = false,
     placeholderText = "Placeholder",
+    onSelectionChange =  () => {},
 }) => {
     // Validation call
     validateProps(options);
@@ -93,23 +95,27 @@ const Dropdown: FC<DropdownProps> = ({
     // Handles the different situations for clicking on an option from a dropdown
     const handleOptionClick = (option: string): void => {
         setSelectedOptions(prevSelected => {
+            let selected: string[];
+
             // Multiselect dropdown
             if (isMultiSelect) {
                 if (prevSelected.includes(option)) {
-                    return prevSelected.filter(selectedOption => selectedOption !== option);
+                    selected = prevSelected.filter(selectedOption => selectedOption !== option);
                 } else {
-                    return [...prevSelected, option];
+                    selected = [...prevSelected, option];
                 }
             }
             // Single select dropdown
             else {
                 if (prevSelected[0] == option) {
-                    return []
+                    selected = []
                 } else {
                     toggleDropdown()    // User probably wants dropdown interaction to be done after selection
-                    return [option];
+                    selected = [option];
                 }
             }
+            onSelectionChange(selected)
+            return selected
         });
     };
 
@@ -117,11 +123,13 @@ const Dropdown: FC<DropdownProps> = ({
     const handleSelectAll = (): void => {
         setSelectedOptions(options);
         toggleDropdown()    // User probably doesn't need the dropdown to stay open if they select everything
+        onSelectionChange(options)
     };
 
     // Deselect all button handler -> empty array for selected options
     const handleDeselectAll = (): void => {
         setSelectedOptions([]);
+        onSelectionChange([])
     };
 
     return (
