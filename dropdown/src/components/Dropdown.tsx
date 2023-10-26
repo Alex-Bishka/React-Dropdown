@@ -1,17 +1,20 @@
-import React, { FC, ChangeEvent, useState, useEffect, useRef } from 'react';
+import { FC, ChangeEvent, useState, useEffect, useRef } from 'react';
 import './Dropdown.css';
 
-/*
-    Take in the following props:
-        - options: array of strings, where each string corresponds to the element displayed in the dropdown
-        - isMultiSelect: a boolean that when true enables our multiselect dropdown, and when false enables the single select dropdown
-        - placeholderText: the tag or starting text that can be entered to specify what the dropdown is for
-*/
+// The props for our Dropdown component
 interface DropdownProps {
     options: string[];
     isMultiSelect: boolean;
     placeholderText?: string;
     onSelectionChange?: (selectedOptions: string[]) => void;
+    selectBtnStyle?: React.CSSProperties;
+    deselectBtnStyle?: React.CSSProperties;
+    btnWrapperStyle?: React.CSSProperties;
+    dropdownInputStyle?: React.CSSProperties;
+    optionWrapperStyle?: React.CSSProperties;
+    arrowStyle?: React.CSSProperties;
+    dropdownWrapperStyle?: React.CSSProperties;
+    optionsStyle?: React.CSSProperties;
 }
 
 // A type alias for non-empty arrays
@@ -35,6 +38,14 @@ const Dropdown: FC<DropdownProps> = ({
     isMultiSelect = false,
     placeholderText = "Placeholder",
     onSelectionChange =  () => {},
+    selectBtnStyle = {},
+    deselectBtnStyle = {},
+    btnWrapperStyle = {},
+    dropdownInputStyle = {},
+    optionWrapperStyle = {},
+    arrowStyle = {},
+    dropdownWrapperStyle = {},
+    optionsStyle = {},
 }) => {
     // Validation call
     validateProps(options);
@@ -133,7 +144,7 @@ const Dropdown: FC<DropdownProps> = ({
     };
 
     return (
-        <div className="dropdown" ref={dropdownRef}>
+        <div className="dropdown" ref={dropdownRef} style={dropdownWrapperStyle}>
             <div className="input-wrapper" onClick={toggleDropdown}>
                 <div className="input-arrow-wrapper">
                     <input
@@ -141,31 +152,32 @@ const Dropdown: FC<DropdownProps> = ({
                         type="text"
                         value={text}
                         onChange={handleChange}
-                        style={{ cursor: "pointer" }}
+                        style={dropdownInputStyle}
                         readOnly={true}
                         ref={inputRef}
                     />
-                    <div className="arrow">
+                    <div className="arrow" style={arrowStyle}>
                         {isOpen ? '▼' : '►'}
                     </div>
                 </div>
             </div>
             {isOpen && (
-                <div className="options">
+                <div className="options" style={optionsStyle}>
                     {options.map((option, index) => (
                         <div
                             key={index}
                             className={`option ${selectedOptions.includes(option) ? 'selected' : ''}`}
                             onClick={() => handleOptionClick(option)}
+                            style={optionWrapperStyle}
                         >
                             {isMultiSelect && <input type="checkbox" checked={selectedOptions.includes(option)} />}
                             {option}
                         </div>
                     ))}
                     {isMultiSelect && (
-                        <div className="select-deselect-buttons">
-                            <button onClick={handleSelectAll}>Select All</button>
-                            <button onClick={handleDeselectAll}>Deselect All</button>
+                        <div className="select-deselect-buttons" style={btnWrapperStyle}>
+                            <button onClick={handleSelectAll} style={selectBtnStyle}>Select All</button>
+                            <button onClick={handleDeselectAll} style={deselectBtnStyle}>Deselect All</button>
                         </div>
                     )}
                 </div>
