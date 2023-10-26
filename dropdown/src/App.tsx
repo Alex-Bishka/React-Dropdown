@@ -1,4 +1,3 @@
-import React, { FC, ChangeEvent, useState } from 'react';
 import './App.css';
 import Dropdown from './components/Dropdown'; 
 
@@ -10,12 +9,14 @@ function App() {
       <div style={{ marginRight: 10}}>
         <Dropdown
           options={options}
+          placeholderText='Select your characters!'
           isMultiSelect={true}
         />
       </div>
       <div>
         <Dropdown
           options={options}
+          placeholderText='Pick a character!'
           isMultiSelect={false}
         />
       </div>

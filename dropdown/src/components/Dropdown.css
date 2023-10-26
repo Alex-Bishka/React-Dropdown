@@ -55,3 +55,10 @@
 input[type="checkbox"] {
     margin-right: 10px;
 }
+
+.select-deselect-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid #b2b0b0;
+}
