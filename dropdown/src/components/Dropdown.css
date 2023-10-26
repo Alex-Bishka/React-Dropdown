@@ -1,0 +1,57 @@
+.dropdown {
+    width: 200px;
+}
+
+.input-wrapper {
+    border: 2px solid #000;
+}
+
+.input-arrow-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-input {
+    width: 150px;
+    padding: 8px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.arrow {
+    position: absolute;
+    right: 8px;
+    cursor: pointer;
+}
+
+.options {
+    width: 196px;
+    position: absolute;
+    display: flex;
+    max-height: 300px;
+    overflow-y: auto;
+    flex-direction: column;
+    border: 2px solid #000;
+    border-top: none;
+    background-color: #f9f9f9;
+}
+
+.option {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+}
+
+.option:hover {
+    background-color: #e0e0e0;
+}
+
+.option.selected {
+    background-color: #d0d0d0;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
